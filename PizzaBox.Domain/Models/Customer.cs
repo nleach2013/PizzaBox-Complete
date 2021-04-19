@@ -1,6 +1,9 @@
 namespace PizzaBox.Domain.Models
 {
-    public class Customer
-    {
-    }
+  /// <summary>
+  /// 
+  /// </summary>
+  public class Customer
+  {
+  }
 }

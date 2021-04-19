@@ -10,6 +10,7 @@ namespace PizzaBox.Client
   public class Program
   {
     private static readonly StoreSingleton _storeSingleton = StoreSingleton.Instance;
+    private static readonly PizzaSingleton _pizzaSingleton = PizzaSingleton.Instance;
     private static void Main()
     {
       Run();
@@ -23,27 +24,53 @@ namespace PizzaBox.Client
       sc.WriteLine("Welcome to PizzaBox!");
 
       PrintStoreList();
-      /*
+
       order.Customer = new Customer();
       order.Store = SelectStore();
       order.Pizza = SelectPizza();
-      */
+    }
 
-
-
-      sc.WriteLine("Make a selection");
-      string input = sc.ReadLine();
-      int entry = int.Parse(input);
-
-      sc.WriteLine(_storeSingleton.Stores[entry]);
+    private static void PrintOrder(APizza pizza)
+    {
+      Console.WriteLine($"Your order is: {pizza}");
     }
 
     private static void PrintStoreList()
     {
-      for (var x = 0; x < _storeSingleton.Stores.Count; x += 1)
+      var index = 0;
+
+      foreach (var item in _storeSingleton.Stores)
       {
-        sc.WriteLine($"{x} {_storeSingleton.Stores[x]}");
+        Console.WriteLine($"{++index} - {item}");
       }
+    }
+
+    private static void PrintPizzaList()
+    {
+      var index = 0;
+
+      foreach (var item in _pizzaSingleton.Pizzas)
+      {
+        sc.WriteLine($"{++index} - {item}");
+      }
+    }
+    private static AStore SelectStore()
+    {
+      var input = int.Parse(sc.ReadLine());
+
+      PrintPizzaList();
+
+      return _storeSingleton.Stores[input - 1];
+    }
+
+    private static APizza SelectPizza()
+    {
+      var input = int.Parse(Console.ReadLine());
+      var pizza = _pizzaSingleton.Pizzas[input - 1];
+
+      PrintOrder(pizza);
+
+      return pizza;
     }
   }
 }

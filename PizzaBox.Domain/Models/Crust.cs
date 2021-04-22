@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using PizzaBox.Domain.Abstracts;
 
 namespace PizzaBox.Domain.Models
@@ -7,5 +8,6 @@ namespace PizzaBox.Domain.Models
   /// </summary>
   public class Crust : AComponent
   {
+    public List<APizza> Pizzas { get; set; }
   }
 }

@@ -2,6 +2,8 @@
 using PizzaBox.Domain.Abstracts;
 using PizzaBox.Domain.Models;
 using PizzaBox.Client.Singletons;
+using PizzaBox.Storing;
+using PizzaBox.Domain.Models.Stores;
 
 namespace PizzaBox.Client
 {

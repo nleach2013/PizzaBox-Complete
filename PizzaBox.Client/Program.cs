@@ -214,15 +214,15 @@ namespace PizzaBox.Client
       {
         case "o":
           result.Name = "Original";
-          result.Price = 2.00m;
+          result.Price = 1.00m;
           break;
         case "n":
           result.Name = "Neapolitan";
-          result.Price = 3.00m;
+          result.Price = 2.00m;
           break;
         case "s":
           result.Name = "Stuffed";
-          result.Price = 4.00m;
+          result.Price = 3.00m;
           break;
         default:
           Console.WriteLine("Invalid Option, Try Again");

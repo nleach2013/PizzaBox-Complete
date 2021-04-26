@@ -15,6 +15,7 @@ namespace PizzaBox.Domain.Abstracts
   public abstract class APizza : AModel
   {
     public Crust Crust { get; set; }
+    public long CrustEntityId { get; set; }
     public Size Size { get; set; }
     public long SizeEntityId { get; set; }
     public List<Topping> Toppings { get; set; }

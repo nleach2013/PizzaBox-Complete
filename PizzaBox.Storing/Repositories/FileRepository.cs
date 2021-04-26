@@ -1,5 +1,7 @@
+using System;
 using System.IO;
 using System.Xml.Serialization;
+using PizzaBox.Domain;
 
 namespace PizzaBox.Storing.Repositories
 {
@@ -21,8 +23,9 @@ namespace PizzaBox.Storing.Repositories
 
         return xml.Deserialize(reader) as T;
       }
-      catch
+      catch (Exception e)
       {
+        System.Console.WriteLine($"Error caught was:\n\n {e}\n\n\n\n");
         return null;
       }
     }

@@ -36,11 +36,11 @@ namespace PizzaBox.Client.Singletons
     /// </summary>
     private PizzaSingleton()
     {
-      // _context.Pizzas.AddRange(_fileRepository.ReadFromFile<List<APizza>>(_path));
-      var cp = new CustomPizza();
-      cp.Size = _context.Sizes.FirstOrDefault(s => s.Name == "Medium");
+      //_context.Pizzas.AddRange(_fileRepository.ReadFromFile<List<APizza>>(_path));
+      //var cp = new CustomPizza();
+      //cp.Size = _context.Sizes.FirstOrDefault(s => s.Name == "Medium");
 
-      _context.Add(cp);
+      //_context.Add(cp);
       _context.SaveChanges();
 
       Pizzas = _context.Pizzas.ToList();

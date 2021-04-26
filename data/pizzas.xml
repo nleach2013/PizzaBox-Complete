@@ -1,21 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfAPizza xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <APizza xsi:type="CustomPizza">
+  <EntityID>1</EntityID>
     <Size>
       <Name>Medium</Name>
     </Size>
     <SizeEntityId>1</SizeEntityId>
+    <Crust>
+      <Name>Original</Name>
+    </Crust>
+    <CrustEntityId>1</CrustEntityId>
   </APizza>
   <APizza xsi:type="MeatPizza">
+  <EntityID>2</EntityID>
     <Size>
       <Name>Medium</Name>
     </Size>
     <SizeEntityId>1</SizeEntityId>
+    <Crust>
+      <Name>Original</Name>
+    </Crust>
+    <CrustEntityId>1</CrustEntityId>
   </APizza>
   <APizza xsi:type="VeggiePizza">
+  <EntityID>3</EntityID>
     <Size>
       <Name>Medium</Name>
     </Size>
     <SizeEntityId>1</SizeEntityId>
+    <Crust>
+      <Name>Original</Name>
+    </Crust>
+    <CrustEntityId>1</CrustEntityId>
   </APizza>
 </ArrayOfAPizza>

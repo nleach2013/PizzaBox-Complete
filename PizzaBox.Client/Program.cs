@@ -4,6 +4,7 @@ using PizzaBox.Domain.Models;
 using PizzaBox.Client.Singletons;
 using PizzaBox.Storing;
 using PizzaBox.Domain.Models.Stores;
+using PizzaBox.Domain.Models.Pizzas;
 
 namespace PizzaBox.Client
 {
@@ -36,6 +37,8 @@ namespace PizzaBox.Client
       order.Customer = new Customer();
       order.Store = SelectStore();
       order.Pizza = SelectPizza();
+
+      //_pizzaSingleton.Pizzas.Add(new VeggiePizza());
     }
 
     /// <summary>

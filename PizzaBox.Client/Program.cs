@@ -15,6 +15,8 @@ namespace PizzaBox.Client
   {
     private static readonly PizzaSingleton _pizzaSingleton = PizzaSingleton.Instance;
     private static readonly StoreSingleton _storeSingleton = StoreSingleton.Instance;
+    private static readonly OrderSingleton _orderSingleton = OrderSingleton.Instance;
+    private static readonly CustomerSingleton _customerSingleton = CustomerSingleton.Instance;
 
     /// <summary>
     /// 
@@ -29,24 +31,90 @@ namespace PizzaBox.Client
     /// </summary>
     private static void Run()
     {
+      Console.WriteLine("Welcome to PizzaBox");
+
+      var cus = GetCustomer();
+
+      Boolean inUse = true;
+      while (inUse)
+      {
+        Console.WriteLine("What do you want to do?");
+        Console.WriteLine("\no-Order a pizza\nv-View Past Orders\nq-Quit\n");
+        var choice = Console.ReadLine();
+        switch (choice.ToLower())
+        {
+          case "o":
+            OrderPizza(cus);
+            break;
+          case "v":
+            ViewOrders(cus);
+            break;
+          case "q":
+            inUse = false;
+            break;
+          default:
+            Console.WriteLine("Error: Unknown option");
+            break;
+        }
+      }
+
+
+
+
+    }
+
+    private static void ViewOrders(Customer cus)
+    {
+      foreach (var item in _orderSingleton.ViewOrders(cus))
+      {
+        Console.WriteLine(item.Pizza);
+      }
+
+    }
+
+    private static Customer GetCustomer()
+    {
+      var cus = new Customer();
+
+      Console.WriteLine("Enter your customer ID or enter a name for a new account:");
+      var choice = Console.ReadLine();
+      if (int.TryParse(choice, out int ID))
+      {
+        cus = _customerSingleton.GetCustomerByID(ID);
+        Console.WriteLine($"Welcome back {cus.Name}!");
+      }
+      else
+      {
+        cus.Name = choice;
+        long Id = _customerSingleton.AddCustomer(cus);
+        Console.WriteLine($"Hello {cus.Name}, your ID is {Id}");
+
+      }
+
+      return cus;
+    }
+
+    private static void OrderPizza(Customer cus)
+    {
       var order = new Order();
 
-      Console.WriteLine("Welcome to PizzaBox");
       PrintStoreList();
 
-      order.Customer = new Customer();
+      order.Customer = cus;
       order.Store = SelectStore();
       order.Pizza = SelectPizza();
 
-      //_pizzaSingleton.Pizzas.Add(new VeggiePizza());
+      PrintOrder(order);
+
+      _orderSingleton.AddOrder(order);
     }
 
     /// <summary>
     /// 
     /// </summary>
-    private static void PrintOrder(APizza pizza)
+    private static void PrintOrder(Order order)
     {
-      Console.WriteLine($"Your order is: {pizza}");
+      Console.WriteLine($"Your order is: {order.Pizza}");
     }
 
     /// <summary>
@@ -81,18 +149,78 @@ namespace PizzaBox.Client
     /// <returns></returns>
     private static APizza SelectPizza()
     {
+      PrintPizzaList();
+      Console.WriteLine("Or press 99 for custom pizza");
       var valid = int.TryParse(Console.ReadLine(), out int input);
 
       if (!valid)
       {
         return null;
       }
+      else if (input == 99)
+      {
+        return MakeCustomPizza();
+      }
 
       var pizza = _pizzaSingleton.Pizzas[input - 1];
 
-      PrintOrder(pizza);
-
       return pizza;
+    }
+
+    private static CustomPizza MakeCustomPizza()
+    {
+      var cp = new CustomPizza();
+      cp.Size = getSize();
+      cp.Crust = getCrust();
+      return cp;
+    }
+
+    private static Size getSize()
+    {
+      Console.WriteLine("Enter size:\ns- Small\nm-medium\nl-large");
+      var input = Console.ReadLine();
+      var result = new Size();
+      switch (input.ToLower())
+      {
+        case "s":
+          result.Name = "Small";
+          break;
+        case "m":
+          result.Name = "Medium";
+          break;
+        case "l":
+          result.Name = "Large";
+          break;
+        default:
+          Console.WriteLine("Invalid Option, Try Again");
+          result = getSize();
+          break;
+      }
+      return result;
+    }
+
+    private static Crust getCrust()
+    {
+      Console.WriteLine("Enter size:\no- Original\nn-Neapolitan\ns-Stuffed");
+      var input = Console.ReadLine();
+      var result = new Crust();
+      switch (input.ToLower())
+      {
+        case "o":
+          result.Name = "Original";
+          break;
+        case "n":
+          result.Name = "Neapolitan";
+          break;
+        case "s":
+          result.Name = "Stuffed";
+          break;
+        default:
+          Console.WriteLine("Invalid Option, Try Again");
+          result = getCrust();
+          break;
+      }
+      return result;
     }
 
     /// <summary>
@@ -107,8 +235,6 @@ namespace PizzaBox.Client
       {
         return null;
       }
-
-      PrintPizzaList();
 
       return _storeSingleton.Stores[input - 1];
     }

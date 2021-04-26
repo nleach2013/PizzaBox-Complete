@@ -104,6 +104,9 @@ namespace PizzaBox.Client
       order.Store = SelectStore();
       order.Pizza = SelectPizza();
 
+      order.Pizza.Size = getSize();
+      order.Pizza.Crust = getCrust();
+
       PrintOrder(order);
 
       _orderSingleton.AddOrder(order);
@@ -184,12 +187,15 @@ namespace PizzaBox.Client
       {
         case "s":
           result.Name = "Small";
+          result.Price = 2.00m;
           break;
         case "m":
           result.Name = "Medium";
+          result.Price = 4.00m;
           break;
         case "l":
           result.Name = "Large";
+          result.Price = 6.00m;
           break;
         default:
           Console.WriteLine("Invalid Option, Try Again");
@@ -208,12 +214,15 @@ namespace PizzaBox.Client
       {
         case "o":
           result.Name = "Original";
+          result.Price = 2.00m;
           break;
         case "n":
           result.Name = "Neapolitan";
+          result.Price = 3.00m;
           break;
         case "s":
           result.Name = "Stuffed";
+          result.Price = 4.00m;
           break;
         default:
           Console.WriteLine("Invalid Option, Try Again");

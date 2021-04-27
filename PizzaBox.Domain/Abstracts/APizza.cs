@@ -74,5 +74,33 @@ namespace PizzaBox.Domain.Abstracts
 
       return $"{Crust} - {Size} - {stringBuilder.ToString().TrimEnd(separator.ToCharArray())} - {Price}";
     }
+
+    public decimal getPrice()
+    {
+      var Price = 0.00M;
+
+      Price += Crust.Price;
+      Price += Size.Price;
+
+      foreach (var item in Toppings)
+      {
+        Price += item.Price;
+      }
+
+      return Price;
+    }
+
+    public string ToppingList()
+    {
+      var stringBuilder = new StringBuilder();
+      var separator = ", ";
+
+      foreach (var item in Toppings)
+      {
+        stringBuilder.Append($"{item}{separator}");
+      }
+
+      return $"{stringBuilder.ToString().TrimEnd(separator.ToCharArray())}";
+    }
   }
 }

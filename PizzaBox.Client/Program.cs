@@ -5,6 +5,7 @@ using PizzaBox.Client.Singletons;
 using PizzaBox.Storing;
 using PizzaBox.Domain.Models.Stores;
 using PizzaBox.Domain.Models.Pizzas;
+using System.Collections.Generic;
 
 namespace PizzaBox.Client
 {
@@ -34,17 +35,32 @@ namespace PizzaBox.Client
       Console.WriteLine("Welcome to PizzaBox");
 
       var cus = GetCustomer();
+      var PizzaCollection = new List<Order>();
 
       Boolean inUse = true;
       while (inUse)
       {
         Console.WriteLine("What do you want to do?");
-        Console.WriteLine("\no-Order a pizza\nv-View Past Orders\nq-Quit\n");
+        Console.WriteLine("\no-Order A Pizza\nc-Show Cart\np-Purchase All Pizzas\nv-View Past Orders\nq-Quit\n");
         var choice = Console.ReadLine();
         switch (choice.ToLower())
         {
+          case "c":
+            PrintCart(PizzaCollection);
+            break;
           case "o":
-            OrderPizza(cus);
+            if (PizzaCollection.Count < 50)
+            {
+              PizzaCollection.Add(OrderPizza(cus));
+              Console.WriteLine("HERE" + PizzaCollection.Count);
+            }
+            else
+            {
+              Console.WriteLine("Too many pizzas!");
+            }
+            break;
+          case "p":
+            purchase(PizzaCollection);
             break;
           case "v":
             ViewOrders(cus);
@@ -60,6 +76,30 @@ namespace PizzaBox.Client
 
 
 
+
+    }
+
+    private static void PrintCart(List<Order> pizzaCollection)
+    {
+      if (pizzaCollection.Count < 1)
+      {
+        foreach (var item in pizzaCollection)
+        {
+          Console.WriteLine(item.Pizza);
+        }
+      }
+    }
+
+    private static void purchase(List<Order> pizzaCollection)
+    {
+      if (pizzaCollection.Count < 1)
+      {
+        foreach (var item in pizzaCollection)
+        {
+          Console.WriteLine(item.Pizza);
+          _orderSingleton.AddOrder(item);
+        }
+      }
 
     }
 
@@ -94,7 +134,7 @@ namespace PizzaBox.Client
       return cus;
     }
 
-    private static void OrderPizza(Customer cus)
+    private static Order OrderPizza(Customer cus)
     {
       var order = new Order();
 
@@ -109,7 +149,7 @@ namespace PizzaBox.Client
 
       PrintOrder(order);
 
-      _orderSingleton.AddOrder(order);
+      return order;
     }
 
     /// <summary>
@@ -129,7 +169,7 @@ namespace PizzaBox.Client
 
       foreach (var item in _pizzaSingleton.Pizzas)
       {
-        Console.WriteLine($"{++index} - {item}");
+        Console.WriteLine($"{++index} - {item.ToppingList()}");
       }
     }
 

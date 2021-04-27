@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using PizzaBox.Domain.Abstracts;
 using PizzaBox.Domain.Models.Stores;
+using PizzaBox.Domain.Models.Pizzas;
 using Xunit;
 
 namespace PizzaBox.Testing.Tests
@@ -11,6 +12,13 @@ namespace PizzaBox.Testing.Tests
     {
       new object[] { new ChicagoStore() },
       new object[] { new NewYorkStore() }
+    };
+
+    public static IEnumerable<object[]> PizzaValues = new List<object[]>()
+    {
+      new object[] { new MeatPizza() },
+      new object[] { new VeggiePizza() },
+      new object[] { new CustomPizza()}
     };
 
     /// <summary>
@@ -64,6 +72,22 @@ namespace PizzaBox.Testing.Tests
     public void Test_StoreNameSimple(string storeName)
     {
       Assert.NotNull(storeName);
+    }
+
+    [Theory]
+    [MemberData(nameof(PizzaValues))]
+    public void Pizza_Testing(APizza pizza)
+    {
+      Assert.NotNull(pizza.Crust);
+      Assert.NotNull(pizza.Size);
+      Assert.NotEmpty(pizza.Toppings);
+    }
+
+    [Theory]
+    [MemberData(nameof(PizzaValues))]
+    public void Pizza_Prices(APizza pizza)
+    {
+      Assert.True(pizza.getPrice() > 0.00M);
     }
   }
 }

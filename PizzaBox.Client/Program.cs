@@ -52,7 +52,7 @@ namespace PizzaBox.Client
             if (PizzaCollection.Count < 50)
             {
               PizzaCollection.Add(OrderPizza(cus));
-              Console.WriteLine("HERE" + PizzaCollection.Count);
+              Console.WriteLine("Pizzas in Cart: " + PizzaCollection.Count);
             }
             else
             {
@@ -81,18 +81,19 @@ namespace PizzaBox.Client
 
     private static void PrintCart(List<Order> pizzaCollection)
     {
-      if (pizzaCollection.Count < 1)
+      if (pizzaCollection.Count > 0)
       {
+        int index = 0;
         foreach (var item in pizzaCollection)
         {
-          Console.WriteLine(item.Pizza);
+          Console.WriteLine($"{++index} - {item.Pizza}");
         }
       }
     }
 
     private static void purchase(List<Order> pizzaCollection)
     {
-      if (pizzaCollection.Count < 1)
+      if (pizzaCollection.Count > 0)
       {
         foreach (var item in pizzaCollection)
         {

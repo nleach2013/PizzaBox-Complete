@@ -40,7 +40,6 @@ namespace PizzaBox.Domain.Models.Pizzas
       }
       else
       {
-        Toppings = new List<Topping>();
         Toppings.AddRange(toppings);
       }
     }

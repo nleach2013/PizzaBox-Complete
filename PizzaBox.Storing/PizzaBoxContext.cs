@@ -64,6 +64,10 @@ namespace PizzaBox.Storing
       // builder.Entity<Size>().HasMany<APizza>().WithOne(); // orm is creating the has
       // builder.Entity<APizza>().HasOne<Size>().WithMany();
 
+      builder.Entity<AStore>().HasMany<Order>(s => s.Orders).WithOne(o => o.Store);
+      builder.Entity<Customer>().HasMany<Order>().WithOne(o => o.Customer);
+      builder.Entity<APizza>().HasMany<Order>().WithOne(o => o.Pizza);
+
       builder.Entity<ChicagoStore>().HasData(new ChicagoStore[]
       {
         new ChicagoStore() { EntityId = 1, Name = "Chitown Main Street" }

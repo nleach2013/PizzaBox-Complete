@@ -31,6 +31,12 @@ namespace PizzaBox.Client.Singletons
       }
     }
 
+    public void AddPizza(APizza pizza)
+    {
+      _context.Pizzas.Add(pizza);
+      _context.SaveChanges();
+    }
+
     /// <summary>
     /// 
     /// </summary>

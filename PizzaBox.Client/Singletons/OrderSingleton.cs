@@ -37,6 +37,14 @@ namespace PizzaBox.Client.Singletons
       order.Store = _context.Stores.FirstOrDefault(s => s.Name == order.Store.Name);
       order.Pizza.Crust = _context.Crusts.FirstOrDefault(s => s.Name == order.Pizza.Crust.Name);
       order.Pizza.Size = _context.Sizes.FirstOrDefault(s => s.Name == order.Pizza.Size.Name);
+
+      var temp = new List<Topping>();
+      foreach (var item in order.Pizza.Toppings)
+      {
+        temp.Add(_context.Toppings.FirstOrDefault(s => s.Name == item.Name));
+      }
+      order.Pizza.Toppings = temp;
+
       order.Pizza = _context.Pizzas.FirstOrDefault(s => s.EntityId == order.Pizza.EntityId);
       order.Customer = _context.Customers.FirstOrDefault(s => s.EntityId == order.Customer.EntityId);
       _context.Add(order);
@@ -46,7 +54,7 @@ namespace PizzaBox.Client.Singletons
     public List<Order> ViewOrders(Customer cus)
     {
       var temp = new List<Order>();
-      temp.AddRange(_context.Orders.Where(s => s.Customer.EntityId == cus.EntityId));
+      temp.AddRange(_context.Orders.Where(s => s.Customer.EntityId == cus.EntityId).ToList<Order>());
       return temp;
     }
 

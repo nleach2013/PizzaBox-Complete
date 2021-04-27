@@ -214,8 +214,8 @@ namespace PizzaBox.Client
     private static CustomPizza MakeCustomPizza()
     {
       var cp = new CustomPizza();
-      cp.Size = getSize();
-      cp.Crust = getCrust();
+      cp.Toppings = GetToppings();
+      _pizzaSingleton.AddPizza(cp);
       return cp;
     }
 
@@ -269,6 +269,47 @@ namespace PizzaBox.Client
           Console.WriteLine("Invalid Option, Try Again");
           result = getCrust();
           break;
+      }
+      return result;
+    }
+
+    private static List<Topping> GetToppings()
+    {
+      Boolean adding = true;
+      var result = new List<Topping>();
+      while (adding)
+      {
+        Console.WriteLine("Add Minimum 2 Maximum 5 Toppings:\n1-Mozzarella\n2-Marinara\n3-Pepperoni\nd-Done");
+        var input = Console.ReadLine();
+        Topping temp = new Topping();
+        switch (input.ToLower())
+        {
+          case "1":
+            temp.Name = "Mozzarella";
+            temp.Price = 1.00m;
+            result.Add(temp);
+            break;
+          case "2":
+            temp.Name = "Marinara";
+            temp.Price = 1.00m;
+            result.Add(temp);
+            break;
+          case "3":
+            temp.Name = "Pepperoni";
+            temp.Price = 2.00m;
+            result.Add(temp);
+            break;
+          case "d":
+          case "D":
+            if (result.Count > 2) { adding = false; }
+            else { Console.WriteLine("Not enough Toppings!\n"); }
+            break;
+          default:
+            Console.WriteLine("Invalid Option, Try Again");
+            result = GetToppings();
+            break;
+        }
+        if (result.Count > 4) { adding = false; }
       }
       return result;
     }

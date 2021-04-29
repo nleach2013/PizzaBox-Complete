@@ -61,12 +61,12 @@ namespace PizzaBox.Storing
 
       builder.Entity<Customer>().HasKey(e => e.EntityId);
 
-      // builder.Entity<Size>().HasMany<APizza>().WithOne();//.HasForeignKey("SizeEntityID");
-      // builder.Entity<APizza>().HasOne<Size>().WithMany();
-      // builder.Entity<Crust>().HasMany<APizza>().WithOne();//.HasForeignKey("CrustEntityID");
-      // builder.Entity<APizza>().HasOne<Crust>().WithMany();
-      // builder.Entity<Topping>().HasMany<APizza>();
-      // builder.Entity<APizza>().HasMany<Topping>();
+      //builder.Entity<Size>().HasMany<APizza>().WithOne();//.HasForeignKey("SizeEntityID");
+      builder.Entity<APizza>().HasOne<Size>().WithMany().HasForeignKey("SizeEntityID");
+      //builder.Entity<Crust>().HasMany<APizza>().WithOne();//.HasForeignKey("CrustEntityID");
+      builder.Entity<APizza>().HasOne<Crust>().WithMany().HasForeignKey("CrustEntityID");
+      //builder.Entity<Topping>().HasMany<APizza>();
+      builder.Entity<APizza>().HasMany<Topping>();
 
 
       builder.Entity<AStore>().HasMany<Order>(s => s.Orders).WithOne(o => o.Store);
@@ -86,6 +86,27 @@ namespace PizzaBox.Storing
       builder.Entity<Customer>().HasData(new Customer[]
       {
         new Customer() { EntityId = 1, Name = "Uncle John" }
+      });
+
+      builder.Entity<Topping>().HasData(new Topping[]
+      {
+        new Topping() {EntityId = 1, Name = "Mozzarella", Price = 1.00m},
+        new Topping() {EntityId = 2, Name = "Marinara", Price = 1.00m},
+        new Topping() {EntityId = 3, Name = "Pepperoni", Price = 2.00m}
+      });
+
+      builder.Entity<Size>().HasData(new Size[]
+      {
+        new Size() {EntityId = 1, Name = "Small", Price = 4.00m},
+        new Size() {EntityId = 2, Name = "Medium", Price = 6.00m},
+        new Size() {EntityId = 3, Name = "Large", Price = 8.00m}
+      });
+
+      builder.Entity<Crust>().HasData(new Crust[]
+      {
+        new Crust() {EntityId = 1, Name = "Original", Price = 1.00m},
+        new Crust() {EntityId = 2, Name = "Neapolitan", Price = 2.00m},
+        new Crust() {EntityId = 3, Name = "Stuffed", Price = 3.00m}
       });
     }
   }

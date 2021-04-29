@@ -275,13 +275,23 @@ namespace PizzaBox.Client
 
     private static List<Topping> GetToppings()
     {
+
       Boolean adding = true;
       var result = new List<Topping>();
       while (adding)
       {
-        Console.WriteLine("Add Minimum 2 Maximum 5 Toppings:\n1-Mozzarella\n2-Marinara\n3-Pepperoni\nd-Done");
+        //1-Mozzarella\n2-Marinara\n3-Pepperoni\n
+        Console.WriteLine("Add Minimum 2 Maximum 5 Toppings:\nd-Done");
+        var index = 0;
+
+        foreach (var item in _pizzaSingleton.UniqueToppings)
+        {
+          Console.WriteLine($"{++index} - {item}");
+        }
+
         var input = Console.ReadLine();
         Topping temp = new Topping();
+
         switch (input.ToLower())
         {
           case "1":

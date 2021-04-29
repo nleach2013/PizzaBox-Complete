@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PizzaBox.Domain.Abstracts;
+using PizzaBox.Domain.Models;
 using PizzaBox.Domain.Models.Pizzas;
 using PizzaBox.Storing;
 using PizzaBox.Storing.Repositories;
@@ -18,6 +19,8 @@ namespace PizzaBox.Client.Singletons
     private readonly PizzaBoxContext _context = new PizzaBoxContext();
 
     public List<APizza> Pizzas { get; set; }
+    public List<Topping> Toppings { get; set; }
+    public List<string> UniqueToppings { get; set; }
     public static PizzaSingleton Instance
     {
       get
@@ -33,6 +36,15 @@ namespace PizzaBox.Client.Singletons
 
     public void AddPizza(APizza pizza)
     {
+      //order.Pizza.Crust = _context.Crusts.FirstOrDefault(s => s.Name == order.Pizza.Crust.Name);
+      pizza.Crust = _context.Crusts.FirstOrDefault(s => s.Name == pizza.Crust.Name);
+      pizza.Size = _context.Sizes.FirstOrDefault(s => s.Name == pizza.Size.Name);
+      var temp = new List<Topping>();
+      foreach (var item in pizza.Toppings)
+      {
+        temp.Add(_context.Toppings.FirstOrDefault(s => s.Name == item.Name));
+      }
+      pizza.Toppings = temp;
       _context.Pizzas.Add(pizza);
       _context.SaveChanges();
     }
@@ -48,6 +60,15 @@ namespace PizzaBox.Client.Singletons
       _context.SaveChanges();
 
       Pizzas = _context.Pizzas.ToList();
+      Toppings = _context.Toppings.ToList();
+      UniqueToppings = new List<string>();
+      foreach (var item in Toppings)
+      {
+        if (!UniqueToppings.Contains(item.Name))
+        {
+          UniqueToppings.Add(item.Name);
+        }
+      }
     }
   }
 }

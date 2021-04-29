@@ -61,8 +61,13 @@ namespace PizzaBox.Storing
 
       builder.Entity<Customer>().HasKey(e => e.EntityId);
 
-      // builder.Entity<Size>().HasMany<APizza>().WithOne(); // orm is creating the has
+      // builder.Entity<Size>().HasMany<APizza>().WithOne();//.HasForeignKey("SizeEntityID");
       // builder.Entity<APizza>().HasOne<Size>().WithMany();
+      // builder.Entity<Crust>().HasMany<APizza>().WithOne();//.HasForeignKey("CrustEntityID");
+      // builder.Entity<APizza>().HasOne<Crust>().WithMany();
+      // builder.Entity<Topping>().HasMany<APizza>();
+      // builder.Entity<APizza>().HasMany<Topping>();
+
 
       builder.Entity<AStore>().HasMany<Order>(s => s.Orders).WithOne(o => o.Store);
       builder.Entity<Customer>().HasMany<Order>().WithOne(o => o.Customer);

@@ -20,7 +20,6 @@ namespace PizzaBox.Client.Singletons
 
     public List<APizza> Pizzas { get; set; }
     public List<Topping> Toppings { get; set; }
-    public List<string> UniqueToppings { get; set; }
     public static PizzaSingleton Instance
     {
       get
@@ -57,18 +56,10 @@ namespace PizzaBox.Client.Singletons
       //_context.Pizzas.AddRange(_fileRepository.ReadFromFile<List<APizza>>(_path));
       //var cp = new CustomPizza();
 
-      _context.SaveChanges();
+      //_context.SaveChanges();
 
       Pizzas = _context.Pizzas.ToList();
       Toppings = _context.Toppings.ToList();
-      UniqueToppings = new List<string>();
-      foreach (var item in Toppings)
-      {
-        if (!UniqueToppings.Contains(item.Name))
-        {
-          UniqueToppings.Add(item.Name);
-        }
-      }
     }
   }
 }

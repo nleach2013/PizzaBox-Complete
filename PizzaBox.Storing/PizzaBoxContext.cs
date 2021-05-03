@@ -22,6 +22,7 @@ namespace PizzaBox.Storing
     public DbSet<Crust> Crusts { get; set; }
     public DbSet<Topping> Toppings { get; set; }
 
+
     /// <summary>
     /// 
     /// </summary>
@@ -61,12 +62,16 @@ namespace PizzaBox.Storing
 
       builder.Entity<Customer>().HasKey(e => e.EntityId);
 
+      builder.Entity<APizza>().HasMany(p => p.Toppings).WithMany(p => p.Pizzas).UsingEntity(j => j.ToTable("PizzaToppings"));
+
+
       //builder.Entity<Size>().HasMany<APizza>().WithOne();//.HasForeignKey("SizeEntityID");
-      builder.Entity<APizza>().HasOne<Size>().WithMany().HasForeignKey("SizeEntityID");
+      //builder.Entity<APizza>().HasOne<Size>().WithMany();//.HasForeignKey("SizeEntityId");
       //builder.Entity<Crust>().HasMany<APizza>().WithOne();//.HasForeignKey("CrustEntityID");
-      builder.Entity<APizza>().HasOne<Crust>().WithMany().HasForeignKey("CrustEntityID");
+      //builder.Entity<APizza>().HasOne<Crust>().WithMany();//.HasForeignKey("CrustEntityId");
       //builder.Entity<Topping>().HasMany<APizza>();
-      builder.Entity<APizza>().HasMany<Topping>();
+      //builder.Entity<APizza>().HasMany<Topping>().WithMany();
+      //builder.Entity<APizza>().HasMany(p => p.Toppings).WithMany(p => p.Pizzas).UsingEntity(j => j.ToTable("PostTags"));
 
 
       builder.Entity<AStore>().HasMany<Order>(s => s.Orders).WithOne(o => o.Store);
@@ -87,6 +92,16 @@ namespace PizzaBox.Storing
       {
         new Customer() { EntityId = 1, Name = "Uncle John" }
       });
+
+      // builder.Entity<MeatPizza>().HasData(new MeatPizza[]
+      // {
+      //   new MeatPizza() { EntityId = 1, CrustEntityId = 3, Crust = new Crust(), SizeEntityId = 1, Size = new Size()}
+      // });
+
+      // builder.Entity<VeggiePizza>().HasData(new VeggiePizza[]
+      // {
+      //   new VeggiePizza() { EntityId = 2, CrustEntityId = 2, SizeEntityId = 1}
+      // });
 
       builder.Entity<Topping>().HasData(new Topping[]
       {

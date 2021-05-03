@@ -73,10 +73,6 @@ namespace PizzaBox.Client
             break;
         }
       }
-
-
-
-
     }
 
     private static void PrintCart(List<Order> pizzaCollection)
@@ -284,42 +280,60 @@ namespace PizzaBox.Client
         Console.WriteLine("Add Minimum 2 Maximum 5 Toppings:\nd-Done");
         var index = 0;
 
-        foreach (var item in _pizzaSingleton.UniqueToppings)
+        foreach (var item in _pizzaSingleton.Toppings)
         {
           Console.WriteLine($"{++index} - {item}");
         }
 
         var input = Console.ReadLine();
-        Topping temp = new Topping();
-
-        switch (input.ToLower())
+        if (input.ToLower() == "d" && result.Count >= 2)
         {
-          case "1":
-            temp.Name = "Mozzarella";
-            temp.Price = 1.00m;
-            result.Add(temp);
-            break;
-          case "2":
-            temp.Name = "Marinara";
-            temp.Price = 1.00m;
-            result.Add(temp);
-            break;
-          case "3":
-            temp.Name = "Pepperoni";
-            temp.Price = 2.00m;
-            result.Add(temp);
-            break;
-          case "d":
-          case "D":
-            if (result.Count > 2) { adding = false; }
-            else { Console.WriteLine("Not enough Toppings!\n"); }
-            break;
-          default:
-            Console.WriteLine("Invalid Option, Try Again");
-            result = GetToppings();
-            break;
+          adding = false;
         }
-        if (result.Count > 4) { adding = false; }
+        else
+        {
+          var valid = int.TryParse(input, out int intput);
+          if (valid && result.Count <= 5)
+          {
+            var topp = _pizzaSingleton.Toppings[intput - 1];
+            result.Add(topp);
+          }
+          else
+          {
+            Console.WriteLine("Invalid Option.");
+          }
+        }
+
+        //   Topping temp = new Topping();
+
+        //   switch (input.ToLower())
+        //   {
+        //     case "1":
+        //       temp.Name = "Mozzarella";
+        //       temp.Price = 1.00m;
+        //       result.Add(temp);
+        //       break;
+        //     case "2":
+        //       temp.Name = "Marinara";
+        //       temp.Price = 1.00m;
+        //       result.Add(temp);
+        //       break;
+        //     case "3":
+        //       temp.Name = "Pepperoni";
+        //       temp.Price = 2.00m;
+        //       result.Add(temp);
+        //       break;
+        //     case "d":
+        //     case "D":
+        //       if (result.Count > 2) { adding = false; }
+        //       else { Console.WriteLine("Not enough Toppings!\n"); }
+        //       break;
+        //     default:
+        //       Console.WriteLine("Invalid Option, Try Again");
+        //       result = GetToppings();
+        //       break;
+        //   }
+        //   if (result.Count > 4) { adding = false; }
       }
       return result;
     }

@@ -24,6 +24,13 @@ namespace PizzaBox.Client
     /// </summary>
     private static void Main()
     {
+      foreach (var item in _pizzaSingleton.Pizzas)
+      {
+        foreach (var topping in item.Toppings)
+        {
+          Console.WriteLine(topping.Name);
+        }
+      }
       Run();
     }
 

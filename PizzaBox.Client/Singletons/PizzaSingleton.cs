@@ -20,6 +20,7 @@ namespace PizzaBox.Client.Singletons
 
     public List<APizza> Pizzas { get; set; }
     public List<Topping> Toppings { get; set; }
+    public List<ToppingRelation> ToppingRelations { get; set; }
     public static PizzaSingleton Instance
     {
       get
@@ -57,9 +58,25 @@ namespace PizzaBox.Client.Singletons
       //var cp = new CustomPizza();
 
       //_context.SaveChanges();
+      //var query = from Pizzas in _context.Pizzas
+      //            where ToppingRelations.All(requiredId => Pizzas.EntityId.Any(Topping => Toppings.EntityId == requiredId));
 
       Pizzas = _context.Pizzas.ToList();
       Toppings = _context.Toppings.ToList();
+      // var test = new ToppingRelation();
+      // test.PizzaEntityId = 1;
+      // test.ToppingEntityId = 1;
+      // ToppingRelations = new List<ToppingRelation>();
+
+      foreach (var item in Pizzas)
+      {
+        var query = from topping in _context.Toppings
+                    where topping.Pizzas.Any(p => p.EntityId == item.EntityId)
+                    select topping;
+        item.Toppings = (query.ToList());
+      }
+
+      //ToppingRelations.AddRange(_context.ToppingRelations.ToList());
     }
   }
 }

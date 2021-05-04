@@ -246,6 +246,24 @@ namespace PizzaBox.Storing.Migrations
                         });
                 });
 
+            modelBuilder.Entity("PizzaBox.Domain.Models.ToppingRelation", b =>
+                {
+                    b.Property<long>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PizzaEntityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToppingEntityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EntityId");
+
+                    b.ToTable("ToppingRelations");
+                });
+
             modelBuilder.Entity("PizzaBox.Domain.Models.Pizzas.CustomPizza", b =>
                 {
                     b.HasBaseType("PizzaBox.Domain.Abstracts.APizza");

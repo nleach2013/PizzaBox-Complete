@@ -62,6 +62,20 @@ namespace PizzaBox.Storing.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ToppingRelations",
+                columns: table => new
+                {
+                    EntityId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PizzaEntityId = table.Column<int>(type: "int", nullable: false),
+                    ToppingEntityId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ToppingRelations", x => x.EntityId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Toppings",
                 columns: table => new
                 {
@@ -241,6 +255,9 @@ namespace PizzaBox.Storing.Migrations
 
             migrationBuilder.DropTable(
                 name: "PizzaToppings");
+
+            migrationBuilder.DropTable(
+                name: "ToppingRelations");
 
             migrationBuilder.DropTable(
                 name: "Customers");

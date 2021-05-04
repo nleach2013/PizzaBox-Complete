@@ -10,7 +10,7 @@ using PizzaBox.Storing;
 namespace PizzaBox.Storing.Migrations
 {
     [DbContext(typeof(PizzaBoxContext))]
-    [Migration("20210429181800_Add All")]
+    [Migration("20210504202520_Add All")]
     partial class AddAll
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -246,6 +246,24 @@ namespace PizzaBox.Storing.Migrations
                             Name = "Pepperoni",
                             Price = 2.00m
                         });
+                });
+
+            modelBuilder.Entity("PizzaBox.Domain.Models.ToppingRelation", b =>
+                {
+                    b.Property<long>("EntityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PizzaEntityId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToppingEntityId")
+                        .HasColumnType("int");
+
+                    b.HasKey("EntityId");
+
+                    b.ToTable("ToppingRelations");
                 });
 
             modelBuilder.Entity("PizzaBox.Domain.Models.Pizzas.CustomPizza", b =>

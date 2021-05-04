@@ -22,6 +22,7 @@ namespace PizzaBox.Storing
     public DbSet<Crust> Crusts { get; set; }
     public DbSet<Topping> Toppings { get; set; }
 
+    public DbSet<ToppingRelation> ToppingRelations { get; set; }
 
     /// <summary>
     /// 
@@ -59,11 +60,17 @@ namespace PizzaBox.Storing
       builder.Entity<Order>().HasKey(e => e.EntityId);
       builder.Entity<Size>().HasKey(e => e.EntityId);
       builder.Entity<Topping>().HasKey(e => e.EntityId);
+      builder.Entity<ToppingRelation>().HasKey(e => e.EntityId);
 
       builder.Entity<Customer>().HasKey(e => e.EntityId);
 
       builder.Entity<APizza>().HasMany(p => p.Toppings).WithMany(p => p.Pizzas).UsingEntity(j => j.ToTable("PizzaToppings"));
 
+
+      //builder.Entity<ToppingRelation>().HasNoKey();
+
+      //builder.Entity<ToppingRelation>().HasMany<APizza>();
+      //builder.Entity<ToppingRelation>().HasMany<Topping>();
 
       //builder.Entity<Size>().HasMany<APizza>().WithOne();//.HasForeignKey("SizeEntityID");
       //builder.Entity<APizza>().HasOne<Size>().WithMany();//.HasForeignKey("SizeEntityId");
